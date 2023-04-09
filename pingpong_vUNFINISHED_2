@@ -18,21 +18,32 @@ class GameSprites(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
-class Player1(GameSprites):
+class Player(GameSprites):
     def update_r(self):
         keys = key.get_pressed()
         if keys[K_UP] and self.rect.y > 5:
             self.rect.x -= self.speed
         if keys[K_DOWN] and self.rect.y < 500 - 80:
             self.rect.x += self.speed
-
-class Player2(GameSprites):
     def update_l(self):
         keys = key.get_pressed()
-        if keys[K_W] and self.rect.y > 5:
+        if keys[K_w] and self.rect.y > 5:
             self.rect.x -= self.speed
-        if keys[K_S] and self.rect.y < 500 - 80:
+        if keys[K_w] and self.rect.y < 500 - 80:
             self.rect.x += self.speed
+
+player_l =
+player_r =
+ball = 'ball.jpg'
+
+game = True
+finish = False
+clock = time.Clock()
+FPS = 60
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            game = False        
 
 game = True
 finish = False
