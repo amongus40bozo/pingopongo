@@ -1,0 +1,8 @@
+from pygame import *
+display.set_caption('я не знаю что делаю но я чтото делаю')
+background = transform.scale(image.load('pingpong.png'), (700, 500))
+win_width = 700
+win_height = 500
+
+game = True
+while game:
