@@ -1,0 +1,68 @@
+from pygame import *
+from random import randint
+speed = 1
+player_l = 'depsrito.png'
+player_r = 'derpsito.png'
+ball = 'baller.png'
+
+display.set_caption('я не знаю что делаю но я чтото делаю')
+background = transform.scale(image.load('pingpong.png'), (700, 500))
+win_width = 700
+win_height = 500
+window = display.set_mode((700, 500))
+
+class GameSprites(sprite.Sprite):
+    def __init__(self,player_image,player_x,player_y,player_speed,speed_x,speed_y):
+        sprite.Sprite.__init__(self)
+        self.image = transform.scale(image.load(player_image),(65, 65)) 
+        self.speed = player_speed
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
+class Player(GameSprites):
+    def update_r(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.x -= self.speed
+        if keys[K_DOWN] and self.rect.y < 500 - 80:
+            self.rect.x += self.speed
+    def update_l(self):
+        keys = key.get_pressed()
+        if keys[K_w] and self.rect.y > 5:
+            self.rect.x -= self.speed
+        if keys[K_w] and self.rect.y < 500 - 80:
+            self.rect.x += self.speed
+
+player_l = Player(player_l, 600,400,4)
+player_r = Player(player_r, 600,400,4)
+ball = GameSprites(ball, 600,400,4)
+
+game = True
+finish = False
+clock = time.Clock()
+FPS = 60
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            game = False
+
+    if finish != True:
+        player_r.update_r()
+        player_l.update_l()
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+
+        if sprite.collide_rect(player_r, ball) or sprite.collide_rect(player_l, ball):
+            speed_x *= -1
+            speed_y *= 1 
+
+        player_l.reset()        
+        player_r.reset()
+        ball.reset()
+
+        
+    display.update()
+    clock.tick(FPS)          
